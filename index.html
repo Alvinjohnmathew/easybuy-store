@@ -1,0 +1,546 @@
+
+
+Index · HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EasyBuy - Online Shopping Site for Gadgets, Fashion, Watch, Shoes & Gifts</title>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons for modern aesthetic -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+ 
+  <!-- ================= HEADER SECTION ================= -->
+  <header class="main-header">
+    <div class="header-container">
+      <!-- Logo -->
+      <div class="header-logo" id="header-logo-btn">
+        <span class="logo-main">Easy<span class="logo-sub">Buy</span></span>
+        <span class="logo-explore">Premium Store</span>
+      </div>
+ 
+      <!-- Search Bar -->
+      <div class="header-search">
+        <input type="text" id="search-input" placeholder="Search for products, brands and more" autocomplete="off">
+        <button id="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </div>
+ 
+      <!-- Header Actions -->
+      <div class="header-actions">
+ 
+        <!-- Role Toggle Button (Customer <-> Admin) -->
+        <button class="header-btn login-btn" id="role-toggle-btn">
+          <span id="role-toggle-text">Admin Panel</span>
+        </button>
+ 
+        <!-- Cart Button -->
+        <div class="cart-btn-wrapper" id="cart-toggle-btn">
+          <i class="fa-solid fa-cart-shopping cart-icon"></i>
+          <span class="cart-text">Cart</span>
+          <span class="cart-badge" id="cart-badge-count">0</span>
+        </div>
+      </div>
+    </div>
+  </header>
+ 
+  <!-- ================= MAIN VIEWS ================= -->
+  <main class="app-body">
+ 
+    <!-- 1. CUSTOMER VIEW CONTAINER -->
+    <div id="customer-view" class="view-container">
+      
+      <!-- Sub-header Category Links -->
+      <nav class="category-bar" id="category-bar">
+        <!-- Rendered dynamically in render.js -->
+      </nav>
+ 
+      <!-- Carousel Banner -->
+      <section class="promo-carousel" id="promo-carousel">
+        <div class="carousel-inner" id="carousel-slides">
+          <div class="carousel-slide active" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);">
+            <div class="slide-content">
+              <span class="badge yellow">EXCLUSIVE SALE</span>
+              <h1>Big Billion Days are BACK!</h1>
+              <p>Unbelievable offers on your favorite gadgets, fashion, watches, shoes, and gifts.</p>
+              <button class="shop-now-btn">Shop Now <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+            <div class="slide-image">
+              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=400" alt="Tech Banner">
+            </div>
+          </div>
+          <div class="carousel-slide" style="background: linear-gradient(135deg, #e65c00 0%, #f9d423 100%);">
+            <div class="slide-content">
+              <span class="badge white">FASHION WEEK</span>
+              <h1>Step Up Your Style Game</h1>
+              <p>Flat 50% Off on Sneakers, Hoodies, Accessories and more.</p>
+              <button class="shop-now-btn">Explore Deals <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+            <div class="slide-image">
+              <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=400" alt="Fashion Banner">
+            </div>
+          </div>
+          <div class="carousel-slide" style="background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);">
+            <div class="slide-content">
+              <span class="badge blue">SMART LIVING</span>
+              <h1>Upgrade Your Home & Kitchen</h1>
+              <p>Discover sleek furniture, modern smart appliances, and decorative items.</p>
+              <button class="shop-now-btn">View Collection <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+            <div class="slide-image">
+              <img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&q=80&w=400" alt="Home Banner">
+            </div>
+          </div>
+        </div>
+        <button class="carousel-prev" id="carousel-prev-btn"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="carousel-next" id="carousel-next-btn"><i class="fa-solid fa-chevron-right"></i></button>
+        <div class="carousel-dots" id="carousel-dots">
+          <!-- Dots generated in render.js/app.js -->
+        </div>
+      </section>
+ 
+      <!-- Main Layout: Filters + Catalog -->
+      <div class="catalog-layout">
+        <!-- Sidebar Filters -->
+        <aside class="sidebar-filters">
+          <div class="filters-header">
+            <h3>Filters</h3>
+            <button id="clear-filters-btn">Clear All</button>
+          </div>
+ 
+          <!-- Price Filter -->
+          <div class="filter-section">
+            <h4>Price Range</h4>
+            <div class="price-input-container">
+              <div class="price-slider-group">
+                <input type="range" id="price-slider" min="0" max="100000" step="500" value="100000">
+                <div class="price-range-labels">
+                  <span>₹0</span>
+                  <span id="price-slider-label">₹100,000</span>
+                </div>
+              </div>
+            </div>
+          </div>
+ 
+          <!-- Sort Filter -->
+          <div class="filter-section">
+            <h4>Sort By</h4>
+            <div class="radio-group">
+              <label class="custom-radio">
+                <input type="radio" name="sort-by" value="popularity" checked>
+                <span class="radio-checkmark"></span> Popularity
+              </label>
+              <label class="custom-radio">
+                <input type="radio" name="sort-by" value="priceLowHigh">
+                <span class="radio-checkmark"></span> Price: Low to High
+              </label>
+              <label class="custom-radio">
+                <input type="radio" name="sort-by" value="priceHighLow">
+                <span class="radio-checkmark"></span> Price: High to Low
+              </label>
+              <label class="custom-radio">
+                <input type="radio" name="sort-by" value="rating">
+                <span class="radio-checkmark"></span> Customer Rating
+              </label>
+            </div>
+          </div>
+ 
+          <!-- Customer Rating Filter -->
+          <div class="filter-section">
+            <h4>Customer Rating</h4>
+            <div class="radio-group">
+              <label class="custom-radio">
+                <input type="radio" name="rating-filter" value="0" checked>
+                <span class="radio-checkmark"></span> All Ratings
+              </label>
+              <label class="custom-radio">
+                <input type="radio" name="rating-filter" value="4">
+                <span class="radio-checkmark"></span> 4★ & above
+              </label>
+              <label class="custom-radio">
+                <input type="radio" name="rating-filter" value="3.5">
+                <span class="radio-checkmark"></span> 3.5★ & above
+              </label>
+              <label class="custom-radio">
+                <input type="radio" name="rating-filter" value="3">
+                <span class="radio-checkmark"></span> 3★ & above
+              </label>
+            </div>
+          </div>
+ 
+          <!-- Colors Filter -->
+          <div class="filter-section">
+            <h4>Colors</h4>
+            <div class="checkbox-group" id="colors-filter-container">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </aside>
+ 
+        <!-- Product Grid Area -->
+        <section class="products-grid-section">
+          <div class="products-header">
+            <h2>Our Collection <span id="products-count-badge">(0 products)</span></h2>
+            <div class="active-category-indicator" id="active-category-label">Category: All</div>
+          </div>
+          <div class="products-grid" id="products-grid-container">
+            <!-- Rendered dynamically in render.js -->
+          </div>
+        </section>
+      </div>
+ 
+    </div>
+ 
+    <!-- 2. ADMIN VIEW CONTAINER -->
+    <div id="admin-view" class="view-container hidden">
+      <!-- Admin Subheader -->
+      <div class="admin-subheader">
+        <div class="admin-title">
+          <h2><i class="fa-solid fa-sliders"></i> Admin Control Panel</h2>
+          <p>Manage catalog, update prices, colors, stock, and process orders.</p>
+        </div>
+        <div class="admin-actions">
+          <button class="primary-btn" id="admin-add-product-btn">
+            <i class="fa-solid fa-plus"></i> Add New Product
+          </button>
+        </div>
+      </div>
+ 
+      <!-- Metrics Cards Dashboard -->
+      <section class="metrics-grid" id="admin-metrics-container">
+        <!-- Rendered dynamically in render.js -->
+      </section>
+ 
+      <!-- Admin Tabs -->
+      <div class="admin-tabs">
+        <button class="admin-tab active" id="tab-products-btn">Manage Products</button>
+        <button class="admin-tab" id="tab-orders-btn">Manage Orders</button>
+        <button class="admin-tab" id="tab-settings-btn">Store Settings</button>
+      </div>
+ 
+      <!-- Tab: Manage Products -->
+      <div class="admin-tab-content" id="tab-products-content">
+        <div class="table-card">
+          <div class="table-header">
+            <h3>Product Inventory</h3>
+            <div class="table-search">
+              <input type="text" id="admin-product-search" placeholder="Search by name or category...">
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Thumbnail</th>
+                  <th>Product Details</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Stock</th>
+                  <th>Colors</th>
+                  <th>Rating</th>
+                  <th class="actions-col">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-products-tbody">
+                <!-- Rendered dynamically in render.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- Tab: Manage Orders -->
+      <div class="admin-tab-content hidden" id="tab-orders-content">
+        <div class="table-card">
+          <div class="table-header">
+            <h3>Customer Orders</h3>
+          </div>
+          <div class="table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Date & Time</th>
+                  <th>Customer Info</th>
+                  <th>Items Purchased</th>
+                  <th>Total Price</th>
+                  <th>Payment Type</th>
+                  <th>Order Status</th>
+                </tr>
+              </thead>
+              <tbody id="admin-orders-tbody">
+                <!-- Rendered dynamically in render.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- Tab: Store Settings -->
+      <div class="admin-tab-content hidden" id="tab-settings-content">
+        <div class="table-card" style="max-width: 500px; margin: 20px auto; padding: 24px;">
+          <h3>Store & Payment Settings</h3>
+          <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Configure your bank account details for direct UPI customer payments.</p>
+          <form id="admin-settings-form">
+            <div class="form-group">
+              <label for="settings-payee-name">Merchant / Payee Name</label>
+              <input type="text" id="settings-payee-name" required placeholder="e.g. EasyBuy Store">
+            </div>
+            <div class="form-group">
+              <label for="settings-upi-id">Merchant UPI ID (e.g. name@bank)</label>
+              <input type="text" id="settings-upi-id" required placeholder="e.g. business@okaxis">
+              <span class="input-helper">Payments made by customers scanning the checkout QR code will go directly to the bank account linked with this UPI ID.</span>
+            </div>
+            <button type="submit" class="primary-btn" style="margin-top: 12px; width: 100%; justify-content: center;">Save Settings</button>
+          </form>
+        </div>
+      </div>
+ 
+    </div>
+ 
+  </main>
+ 
+  <!-- ================= GLOBAL COMPONENTS (MODALS & DRAWER) ================= -->
+ 
+  <!-- A. CART DRAWER (SLIDE-IN) -->
+  <div class="cart-drawer-overlay" id="cart-drawer-overlay">
+    <div class="cart-drawer" id="cart-drawer">
+      <div class="drawer-header">
+        <h2>My Cart (<span id="cart-items-count">0</span>)</h2>
+        <button class="close-drawer-btn" id="close-cart-btn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+ 
+      <div class="drawer-body" id="cart-items-container">
+        <!-- Rendered dynamically -->
+      </div>
+ 
+      <div class="drawer-footer" id="cart-price-summary">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+ 
+  <!-- B. PRODUCT DETAILS MODAL -->
+  <div class="modal-overlay hidden" id="details-modal-overlay">
+    <div class="modal-container details-modal">
+      <button class="close-modal-btn" id="close-details-btn"><i class="fa-solid fa-xmark"></i></button>
+      <div class="modal-body details-modal-body" id="details-modal-content">
+        <!-- Rendered dynamically in render.js -->
+      </div>
+    </div>
+  </div>
+ 
+  <!-- C. CHECKOUT & PAYMENT MODAL -->
+  <div class="modal-overlay hidden" id="checkout-modal-overlay">
+    <div class="modal-container checkout-modal">
+      <button class="close-modal-btn" id="close-checkout-btn"><i class="fa-solid fa-xmark"></i></button>
+      
+      <div class="checkout-wizard">
+        <div class="wizard-steps">
+          <div class="step active" id="step-nav-address">1. Shipping</div>
+          <div class="step" id="step-nav-payment">2. Payment</div>
+          <div class="step" id="step-nav-success">3. Complete</div>
+        </div>
+ 
+        <div class="checkout-modal-body">
+          <!-- Step 1: Address Form -->
+          <form id="checkout-address-form" class="checkout-step-panel">
+            <h3>Shipping Address</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="ship-name">Full Name</label>
+                <input type="text" id="ship-name" required placeholder="John Doe">
+              </div>
+              <div class="form-group">
+                <label for="ship-phone">Phone Number</label>
+                <input type="tel" id="ship-phone" required placeholder="9876543210">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="ship-address">Street Address</label>
+              <textarea id="ship-address" rows="3" required placeholder="Flat No, Apartment, Area, Street"></textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="ship-city">City</label>
+                <input type="text" id="ship-city" required placeholder="Mumbai">
+              </div>
+              <div class="form-group">
+                <label for="ship-pincode">Pincode</label>
+                <input type="text" id="ship-pincode" pattern="[0-9]{6}" required placeholder="400001">
+              </div>
+            </div>
+            <div class="checkout-action-footer">
+              <div class="checkout-price-preview">Total Amount: <span id="checkout-address-price">₹0</span></div>
+              <button type="submit" class="primary-btn">Proceed to Payment <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+          </form>
+ 
+          <!-- Step 2: Payment Simulator -->
+          <div id="checkout-payment-panel" class="checkout-step-panel hidden">
+            <h3>Select Payment Method</h3>
+            <div class="payment-options">
+              <label class="payment-method-card active">
+                <input type="radio" name="payment-method" value="UPI" checked>
+                <div class="payment-card-content">
+                  <i class="fa-solid fa-mobile-screen payment-icon"></i>
+                  <div>
+                    <strong>UPI (Google Pay, PhonePe, Paytm)</strong>
+                    <p>Instant refund on failure. Secure transfer.</p>
+                  </div>
+                </div>
+              </label>
+ 
+ 
+            </div>
+ 
+            <!-- UPI details form -->
+            <div id="upi-details-container" class="payment-detail-form text-center">
+              <div class="qr-code-section" id="upi-qr-section">
+                <p style="font-size: 13px; font-weight: 600; margin-bottom: 8px;">Scan QR Code to Transfer Directly to Bank</p>
+                <div style="background-color: #fff; padding: 12px; display: inline-block; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 8px;">
+                  <img id="upi-qr-image" src="" alt="UPI Payment QR Code" style="width: 180px; height: 180px; display: block;">
+                </div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">
+                  Payee: <strong id="upi-qr-payee">EasyBuy Store</strong><br>
+                  UPI ID: <strong id="upi-qr-id">easybuy@okaxis</strong>
+                </div>
+                <label class="custom-checkbox" style="justify-content: center; margin-bottom: 16px;">
+                  <input type="checkbox" id="upi-paid-checkbox">
+                  <span class="checkbox-checkmark"></span> I have completed the bank transfer
+                </label>
+              </div>
+              <div style="border-top: 1px dashed var(--border-color); padding-top: 12px; margin-top: 12px;">
+                <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">- OR ENTER UPI ID TO PAY -</p>
+                <div class="form-group" style="text-align: left;">
+                  <label for="upi-id">Enter UPI ID</label>
+                  <input type="text" id="upi-id" placeholder="username@upi">
+                  <span class="input-helper">Example: mobileNo@ybl, name@okaxis</span>
+                </div>
+              </div>
+            </div>
+ 
+ 
+ 
+            <div class="checkout-action-footer">
+              <button class="secondary-btn" id="payment-back-btn"><i class="fa-solid fa-arrow-left"></i> Back</button>
+              <button class="primary-btn" id="pay-now-btn">Pay & Place Order <i class="fa-solid fa-circle-check"></i></button>
+            </div>
+          </div>
+ 
+          <!-- Step 2b: Processing payment simulation -->
+          <div id="checkout-processing-panel" class="checkout-step-panel hidden text-center">
+            <div class="payment-spinner-container">
+              <div class="payment-spinner"></div>
+            </div>
+            <h3>Authorizing Transaction...</h3>
+            <p>Please do not refresh the page or click back.</p>
+          </div>
+ 
+          <!-- Step 3: Order Success Screen -->
+          <div id="checkout-success-panel" class="checkout-step-panel hidden text-center">
+            <div class="success-icon-container">
+              <i class="fa-solid fa-circle-check success-check-icon"></i>
+            </div>
+            <h2>Order Placed Successfully!</h2>
+            <p class="order-id-success">Order ID: <span id="success-order-id">ORD_123456</span></p>
+            <p class="success-message">Thank you for shopping at EasyBuy! A confirmation SMS has been sent to your registered mobile number.</p>
+            <div class="success-actions">
+              <button class="primary-btn" id="success-continue-shopping">Continue Shopping</button>
+              <button class="secondary-btn" id="success-view-orders">View Order Status</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- D. ADMIN ADD/EDIT PRODUCT MODAL -->
+  <div class="modal-overlay hidden" id="admin-product-modal-overlay">
+    <div class="modal-container admin-product-modal">
+      <button class="close-modal-btn" id="close-admin-product-btn"><i class="fa-solid fa-xmark"></i></button>
+      
+      <div class="admin-modal-header">
+        <h3 id="admin-modal-title">Add New Product</h3>
+        <p>Fill out the form below. Real-time preview is updated below.</p>
+      </div>
+ 
+      <form id="admin-product-form">
+        <!-- Hidden input for editing ID -->
+        <input type="hidden" id="admin-form-product-id">
+ 
+        <div class="form-group">
+          <label for="prod-title">Product Title</label>
+          <input type="text" id="prod-title" required placeholder="e.g., Apple iPhone 15 Pro Max (256 GB) - Natural Titanium">
+        </div>
+ 
+        <div class="form-row">
+          <div class="form-group">
+            <label for="prod-category">Category</label>
+            <select id="prod-category" required>
+              <option value="Gadgets">Gadgets</option>
+              <option value="Fashion">Fashion</option>
+              <option value="Watch">Watch</option>
+              <option value="Shoes">Shoes</option>
+              <option value="Gifts">Gifts</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="prod-stock">Stock Quantity</label>
+            <input type="number" id="prod-stock" min="0" required placeholder="e.g., 10">
+          </div>
+        </div>
+ 
+        <div class="form-row">
+          <div class="form-group">
+            <label for="prod-price">Selling Price (₹)</label>
+            <input type="number" id="prod-price" min="1" required placeholder="e.g., 139900">
+          </div>
+          <div class="form-group">
+            <label for="prod-original-price">Original MRP (₹)</label>
+            <input type="number" id="prod-original-price" min="1" required placeholder="e.g., 159900">
+          </div>
+        </div>
+ 
+        <div class="form-group">
+          <label for="prod-colors">Colors (Comma separated)</label>
+          <input type="text" id="prod-colors" required placeholder="e.g., Natural Titanium, White, Blue, Black">
+          <span class="input-helper">Separate multiple colors with commas. Make sure to specify at least one.</span>
+        </div>
+ 
+        <div class="form-group">
+          <label for="prod-image">Image URL</label>
+          <div class="image-input-wrapper">
+            <input type="url" id="prod-image" placeholder="https://images.unsplash.com/photo-...">
+            <button type="button" id="btn-random-img" class="secondary-btn small-btn">Random Image</button>
+          </div>
+          <span class="input-helper">Provide a URL or click "Random Image" to auto-assign a high-quality picture.</span>
+        </div>
+ 
+        <div class="form-group">
+          <label for="prod-desc">Product Description</label>
+          <textarea id="prod-desc" rows="4" required placeholder="Enter key features, specifications, and dimensions."></textarea>
+        </div>
+ 
+        <div class="admin-modal-actions">
+          <button type="button" class="secondary-btn" id="btn-cancel-product">Cancel</button>
+          <button type="submit" class="primary-btn" id="btn-save-product">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+ 
+  <!-- Toast Notifications Container -->
+  <div class="toast-container" id="toast-container"></div>
+ 
+  <!-- JS Modules -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
+ 
